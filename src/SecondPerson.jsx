@@ -3,36 +3,42 @@ import { useState } from "@hookstate/core";
 import store from "./store";
 
 const SecondPerson = () => {
-  // (4) copy the firstPerson's import, messageList, and messageList. 
+  // (4) copy the firstPerson's import, messageList, and messageList.
   // and then paste to the secondPerson.
-  // you can see 'hey' in both of chatbox. 
+  // you can see 'hey' in both of chatbox.
   // const messageList = useState(store);
 
   // (7) do the same thing in secondPerson component
   const { firstPersonMessageList, secondPersonMessageList } = useState(store);
 
-  const handleSendMessage = newMessage => {
-    firstPersonMessageList.merge([{
-      text: newMessage,
-      person: 'secondary'
-    }])
-    secondPersonMessageList.merge([{
-      text: newMessage,
-      person: 'primary'
-    }])
-  }
+  const handleSendMessage = (newMessage) => {
+    secondPersonMessageList.merge([
+      {
+        text: newMessage,
+        person: "primary",
+      },
+    ]);
+    setTimeout(() => {
+      firstPersonMessageList.merge([
+        {
+          text: newMessage,
+          person: "secondary",
+        },
+      ]);
+    }, 500);
+  };
 
   return (
-    <ChatBox 
+    <ChatBox
       settings={{
-        navColor: 'blue',
-        navText: 'Cortana',
-        isOpen: true
+        navColor: "blue",
+        navText: "Cortana",
+        isOpen: true,
       }}
       messageList={secondPersonMessageList.get()}
       onSendMessage={handleSendMessage}
     />
-  )
-}
+  );
+};
 
 export default SecondPerson;
