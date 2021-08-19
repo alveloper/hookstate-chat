@@ -1,6 +1,11 @@
+import FirstPerson from "./FirstPerson"
+import SecondPerson from "./SecondPerson"
+
 const App =() => {
   return (
-    <div className="App">
+    <div>
+      <FirstPerson />
+      <SecondPerson />
     </div>
   );
 }
