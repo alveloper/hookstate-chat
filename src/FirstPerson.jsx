@@ -7,18 +7,31 @@ const FirstPerson = () => {
   // inside of useState hook, we are going to pass in an arguments
   // which is the state we want to access,
   // and we want the "store" we just created.
-  const messageList = useState(store);
+  // const messageList = useState(store);
+
+  // (7) destructuring 
+  const { firstPersonMessageList, secondPersonMessageList } = useState(store);
 
   // (5) handleSendMessage function: update the state
   const handleSendMessage = newMessage => {
     // inside this .merge method we want to pass on the new value of our states as its argument.
     // so it's going to take the value and append it to what there was before.
     // you don't need to use spread operator or something.
-    messageList.merge([{
-      text: newMessage,
-      person: 'secondary' // this is going to be show the message like on the opposite.
-    }])
+    // messageList.merge([{
+    //   text: newMessage,
+    //   person: 'secondary' // this is going to be show the message like on the opposite.
+    // }])
     // if you want to replace the old state, then use .set method.
+
+    // (7) change the messageList to firstPersonMessage, and add secondPersonMessage
+    firstPersonMessageList.merge([{
+      text: newMessage,
+      person: 'primary'
+    }])
+    secondPersonMessageList.merge([{
+      text: newMessage,
+      person: 'secondary'
+    }])
   }
 
   return (
@@ -32,7 +45,7 @@ const FirstPerson = () => {
       // (3) now that we have a messageList, we can pass it as a prop to the chatbox component
       // the messageList contains the list of messages when we send a new message
       // we're going to add it to the message list state and that's going to display inside the chat box
-      messageList={messageList.get()} // to access the data from our state, we have to use the get method.
+      // messageList={messageList.get()} // to access the data from our state, we have to use the get method.
       // => now the browser shows the initial state 'hey' as a message in chatbox of first person.
 
       // (5) make handleSendMessage method and bind to onSendMessage.
@@ -41,6 +54,9 @@ const FirstPerson = () => {
       // so whenever the user clicks the send button, 
       // the chatbox component is going to run the onSendMessage function.
       onSendMessage={handleSendMessage}
+
+      // (7) change the variable
+      messageList={firstPersonMessageList.get()}
     />
   );
 };
